@@ -12,6 +12,7 @@ object Main extends App{
   println()
   for (n <- 1 to 30) print(Generator.nextInt() + " ")
   println()
-  val wordService = new WordService
-  print(wordService.loadWordList())
+  private val wordService = new WordService()
+  println(wordService.wordMap)
+  println(wordService.characterMap)
 }
