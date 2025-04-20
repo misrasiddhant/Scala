@@ -16,15 +16,21 @@ class WordService {
     wordList.foreach {
       word =>
         val key = getKey(word)
-        var wordMapItems = wordMap.getOrElse(key, mutable.Seq())
-        wordMapItems = wordMapItems :+ (word)
-        wordMap.put(key, wordMapItems)
-        key.foreach(c => {
-          var items = characterMap.getOrElse(c, mutable.Seq())
-          items = items :+ (word)
-          characterMap.put(c, items)
-        })
 
+        val wordMapItems = wordMap.get(key) match
+          case Some(value) => value :+ (word)
+          case None => {
+            key.foreach(c => {
+
+              val items = characterMap.get(c) match
+                case Some(value) => value :+ key
+                case None => mutable.Seq(key)
+
+              characterMap.put(c, items)
+            })
+            mutable.Seq(word)
+          }
+        wordMap.put(key, wordMapItems)
     }
     (characterMap, wordMap)
   }
@@ -33,4 +39,31 @@ class WordService {
 
   def characterMap: mutable.Map[Char, mutable.Seq[String]] = _characterMap
   def wordMap: mutable.Map[String, mutable.Seq[String]] = _wordMap
+
+  def solve(input: String): String = {
+    val inputKey = getKey(input)
+    val eligibleKeys = inputKey.toList.map(c =>
+      _characterMap.getOrElse(c, mutable.Seq())
+    ).flatMap(_.toList).distinct.filter(key => key.forall(inputKey.contains))
+
+    val inputCharFrequency = input.foldLeft(Map[Char, Int]().withDefaultValue(0)) {
+      (map, c) => map.updated(c, map(c) + 1)
+    }
+
+    var largestWord = ""
+    eligibleKeys.foreach( key =>
+      _wordMap.getOrElse(key,Seq())
+      .filter(key => {
+        val keyCharFrequency = key.foldLeft(Map[Char, Int]().withDefaultValue(0)) {
+          (map, c) => map.updated(c, map(c) + 1)
+        }
+        keyCharFrequency.forall((c,f) => inputCharFrequency.getOrElse(c,0) >= f)
+      })
+      .foreach(
+        word =>
+          largestWord= if (word.length > largestWord.length) word else largestWord
+      )
+    )
+    largestWord
+  }
 }
