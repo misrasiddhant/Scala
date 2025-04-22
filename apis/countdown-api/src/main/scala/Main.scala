@@ -13,6 +13,6 @@ object Main extends App{
   for (n <- 1 to 30) print(Generator.nextInt() + " ")
   println()
   private val wordService = new WordService()
-  println(wordService.solve("wartaser"))
+  println(wordService.solve("hrebaftnl"))
 
 }

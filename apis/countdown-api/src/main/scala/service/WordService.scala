@@ -11,7 +11,7 @@ class WordService {
   private def loadWordList() = {
     val characterMap: mutable.Map[Char, mutable.Seq[String]] = mutable.Map()
     val wordMap: mutable.Map[String, mutable.Seq[String]] = mutable.Map()
-    val file = Source.fromFile("src/main/resources/data/wordlist.10000.txt")
+    val file = Source.fromFile("src/main/resources/data/words_alpha.txt")
     val wordList = file.getLines().toList
     wordList.foreach {
       word =>
@@ -40,7 +40,7 @@ class WordService {
   def characterMap: mutable.Map[Char, mutable.Seq[String]] = _characterMap
   def wordMap: mutable.Map[String, mutable.Seq[String]] = _wordMap
 
-  def solve(input: String): String = {
+  def solve(input: String): mutable.Seq[String] = {
     val inputKey = getKey(input)
     val eligibleKeys = inputKey.toList.map(c =>
       _characterMap.getOrElse(c, mutable.Seq())
@@ -50,7 +50,8 @@ class WordService {
       (map, c) => map.updated(c, map(c) + 1)
     }
 
-    var largestWord = ""
+    var largestWord: mutable.Seq[String] = mutable.Seq()
+    var largestWordLength = 0
     eligibleKeys.foreach( key =>
       _wordMap.getOrElse(key,Seq())
       .filter(key => {
@@ -61,7 +62,13 @@ class WordService {
       })
       .foreach(
         word =>
-          largestWord= if (word.length > largestWord.length) word else largestWord
+          val wordLength = word.length
+          if(wordLength > largestWordLength) {
+            largestWord = largestWord.empty
+            largestWord = largestWord :+ word
+            largestWordLength = wordLength
+          }
+          else if (wordLength == largestWordLength) largestWord = largestWord :+ word
       )
     )
     largestWord
