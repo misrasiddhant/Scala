@@ -3,7 +3,8 @@ on:
   pull_request:
     branches:
       - main
-
+    paths:
+      - 'leet-code/leet-code/**'
 
 jobs:
   test:
@@ -17,6 +18,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          cache: 'sbt'
       - name: Setup sbt launcher
         uses: sbt/setup-sbt@v1
       - name: Test LeetCode solutions
