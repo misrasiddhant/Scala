@@ -1,0 +1,24 @@
+name: LeetCode Solution Test
+on:
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Test LeetCode solutions
+        working-directory: leet-code/leet-code
+        run: sbt test
