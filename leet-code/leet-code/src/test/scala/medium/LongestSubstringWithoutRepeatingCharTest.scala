@@ -3,35 +3,35 @@ package medium
 import org.scalatest.funsuite.AnyFunSuite
 
 class LongestSubstringWithoutRepeatingCharTest extends AnyFunSuite {
-  test("AddTwoNumbers.Case1") {
+  test("LongestSubstringWithoutRepeatingChar.Case1") {
     assert(LongestSubstringWithoutRepeatingChar.solution(" ") == 1)
   }
 
-  test("AddTwoNumbers.Case2") {
+  test("LongestSubstringWithoutRepeatingChar.Case2") {
     assert(LongestSubstringWithoutRepeatingChar.solution("pwwkew") == 3)
   }
 
-  test("AddTwoNumbers.Case3") {
+  test("LongestSubstringWithoutRepeatingChar.Case3") {
     assert(LongestSubstringWithoutRepeatingChar.solution("bbbb") == 1)
   }
 
-  test("AddTwoNumbers.Case4") {
+  test("LongestSubstringWithoutRepeatingChar.Case4") {
     assert(LongestSubstringWithoutRepeatingChar.solution("abcabcbb") == 3)
   }
 
-  test("AddTwoNumbers.Case5") {
+  test("LongestSubstringWithoutRepeatingChar.Case5") {
     assert(LongestSubstringWithoutRepeatingChar.solution("cdd") == 2)
   }
 
-  test("AddTwoNumbers.Case6") {
+  test("LongestSubstringWithoutRepeatingChar.Case6") {
     assert(LongestSubstringWithoutRepeatingChar.solution("pacvypxdmqxevpbsucieitc") == 12)
   }
 
-  test("AddTwoNumbers.Case7") {
+  test("LongestSubstringWithoutRepeatingChar.Case7") {
     assert(LongestSubstringWithoutRepeatingChar.solution("au") == 2)
   }
 
-  test("AddTwoNumbers.Case8") {
+  test("LongestSubstringWithoutRepeatingChar.Case8") {
     assert(LongestSubstringWithoutRepeatingChar.solution("aabaab!bb") == 3)
   }
 }
